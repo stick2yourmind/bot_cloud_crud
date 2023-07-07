@@ -8,7 +8,6 @@ export class MessageController {
 
   @Get('')
   getAllMessage() {
-    console.log('🚀 ~ file: message.controller.ts:11 ~ Get');
     return this.messageService.getAllMessages();
   }
   @Get(':id')
@@ -18,7 +17,6 @@ export class MessageController {
 
   @Post()
   createMessage(@Body() dto: CreateMessageDto) {
-    console.log('🚀 ~ file: message.controller.ts:11 ~ Post');
     return this.messageService.createMessage(dto);
   }
 
