@@ -1,32 +1,10 @@
-import {
-  Injectable,
-  Inject,
-  OnModuleInit,
-  ServiceUnavailableException,
-  NotFoundException,
-} from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
+import { Injectable, ServiceUnavailableException, NotFoundException } from '@nestjs/common';
 import { FirebaseService } from 'src/firebase/firebase.service';
-import { EnvironmentVariables } from 'src/interface/env.interface';
-import { CreateMessageDto, EditMessageDto } from 'src/message/dto';
-import { TUNNEL_KEY_NAME } from 'src/tunnel/tunnel.config';
-import { telegramApi } from 'src/utils/telegramApi.util';
-import { Telegraf } from 'telegraf';
+import { CreateMessageDto, EditMessageDto } from './dto';
 
 @Injectable()
-export class BotService implements OnModuleInit {
-  constructor(
-    private configService: ConfigService<EnvironmentVariables>,
-    @Inject(TUNNEL_KEY_NAME) private proxyUrl: string,
-    private firebase: FirebaseService,
-  ) {}
-  async onModuleInit() {
-    const bot = new Telegraf(this.configService.get('BOT_TOKEN'));
-    await bot.createWebhook({
-      domain: this.proxyUrl,
-      path: '/bot',
-    });
-  }
+export class MessageService {
+  constructor(private firebase: FirebaseService) {}
 
   async createMessage(dto: CreateMessageDto) {
     try {
@@ -37,10 +15,9 @@ export class BotService implements OnModuleInit {
     }
   }
 
-  async getAllMessages(chatId: string) {
+  async getAllMessages() {
     try {
       const messages = await this.firebase.getAllMessages();
-      await telegramApi.reply({ chatId, text: JSON.stringify(messages) });
       return messages;
     } catch (error) {
       throw new ServiceUnavailableException();

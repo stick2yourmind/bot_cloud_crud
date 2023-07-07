@@ -7,6 +7,6 @@ import { BotMiddleware } from './bot.middleware';
 })
 export class BotModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(BotMiddleware).forRoutes('*');
+    consumer.apply(BotMiddleware).forRoutes('bot');
   }
 }

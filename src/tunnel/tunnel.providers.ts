@@ -11,7 +11,6 @@ export const tunnelProviders = [
         authtoken: configService.get('TUNNEL_TOKEN'),
         addr: configService.get('TUNNEL_FORWARD_PORT'),
       });
-      console.log('🚀 ~ file: tunnel.providers.ts:14 ~ useFactory: ~ url:', url);
       return url;
     },
   },
