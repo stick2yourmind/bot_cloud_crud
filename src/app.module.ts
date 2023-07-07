@@ -6,6 +6,11 @@ import { TunnelModule } from './tunnel/tunnel.module';
 import { BotService } from './bot/bot.service';
 import { BotController } from './bot/bot.controller';
 import { BotModule } from './bot/bot.module';
+import { FirebaseService } from './firebase/firebase.service';
+import { FirebaseModule } from './firebase/firebase.module';
+import { MessageController } from './message/message.controller';
+import { MessageService } from './message/message.service';
+import { MessageModule } from './message/message.module';
 
 @Module({
   imports: [
@@ -14,8 +19,10 @@ import { BotModule } from './bot/bot.module';
     }),
     TunnelModule,
     BotModule,
+    FirebaseModule,
+    MessageModule,
   ],
-  controllers: [AppController, BotController],
-  providers: [AppService, BotService],
+  controllers: [AppController, BotController, MessageController],
+  providers: [AppService, BotService, FirebaseService, MessageService],
 })
 export class AppModule {}
