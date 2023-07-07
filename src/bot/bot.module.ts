@@ -1,8 +1,12 @@
 import { TunnelModule } from 'src/tunnel/tunnel.module';
-import { Module } from '@nestjs/common';
-// import { BotMiddleware } from './bot.middleware';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
+import { BotMiddleware } from './bot.middleware';
 
 @Module({
   imports: [TunnelModule],
 })
-export class BotModule {}
+export class BotModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(BotMiddleware).forRoutes('*');
+  }
+}
